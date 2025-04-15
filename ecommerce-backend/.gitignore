@@ -1,0 +1,5 @@
+# Ignore MySQL socket file
+*.sock
+
+# Ignore other temporary and database-related files
+/data/mysql/
