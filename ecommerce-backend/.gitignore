@@ -3,3 +3,6 @@
 
 # Ignore other temporary and database-related files
 /data/mysql/
+
+# Ignore node_modules
+node_modules/
