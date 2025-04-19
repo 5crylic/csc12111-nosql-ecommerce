@@ -1,4 +1,0 @@
-exit
-db.users.find()
-use ecommerce
-db.users.find()

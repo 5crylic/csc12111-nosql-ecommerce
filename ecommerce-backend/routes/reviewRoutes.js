@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { addReview } = require('../controllers/reviewController');
+const reviewController = require('../controllers/reviewController');
 
-router.post('/:id/review', addReview);
+router.post('/:productId', reviewController.createReview);
+router.get('/:productId', reviewController.getProductReviews);
+router.get('/behavior/:userId', reviewController.getUserBehavior);
 
 module.exports = router;

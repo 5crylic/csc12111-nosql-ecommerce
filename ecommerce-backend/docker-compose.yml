@@ -1,35 +1,56 @@
-version: '3'
+version: '3.8'
+
 services:
-  mongodb:
-    image: mongo
-    container_name: mongodb
+  # MongoDB
+  mongo:
+    image: mongo:latest
+    container_name: mongo-db
     ports:
       - "27017:27017"
     volumes:
-      - ./data/mongo:/data/db
-    networks:
-      - ecommerce-network
-
-  mysql:
-    image: mysql:8
-    container_name: mysql
+      - mongo-data:/data/db
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: ecommerce
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./data/mysql:/var/lib/mysql
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     networks:
       - ecommerce-network
 
+  # Redis
   redis:
-    image: redis
-    container_name: redis
+    image: redis:latest
+    container_name: redis-db
     ports:
       - "6379:6379"
     networks:
       - ecommerce-network
+
+  # Cassandra
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra-db
+    ports:
+      - "9042:9042"
+    environment:
+      - CASSANDRA_CLUSTER_NAME=Test Cluster
+      - CASSANDRA_DC=dc1
+      - CASSANDRA_RACK=rack1
+    networks:
+      - ecommerce-network
+
+  # Neo4j
+  neo4j:
+    image: neo4j:latest
+    container_name: neo4j-db
+    ports:
+      - "7474:7474"   # HTTP
+      - "7687:7687"   # Bolt
+    environment:
+      - NEO4J_AUTH=neo4j/password
+    networks:
+      - ecommerce-network
+
+volumes:
+  mongo-data:
 
 networks:
   ecommerce-network:
