@@ -1,28 +1,54 @@
-# API Contracts
+# 📘 API Contracts
 
-## 🌐 Tổng Quan API / Hệ Thống E-Commerce Backend
+## 🌐 API Thiết Kế Theo Flow
 
-Hệ thống được chia thành 5 nhóm API chính, tương ứng với các chức năng cốt lõi trong trải nghiệm người dùng và xử lý đơn hàng:
+---
 
-### 1. Quản Lý Người Dùng (User Management)
-- Đăng ký / Đăng nhập / Xác thực và lấy thông tin người dùng
-- Phục vụ bảo mật và cá nhân hóa trải nghiệm
+### 1. 🔐 Auth APIs (MongoDB + Redis)
 
-### 2. Quản Lý Sản Phẩm (Product Management)
-- Lấy danh sách và chi tiết sản phẩm
-- Cho phép frontend hiển thị hàng hóa theo danh mục, giá, kho...
+| Method | Endpoint             | Mô tả                                       |
+|--------|----------------------|---------------------------------------------|
+| POST   | `/api/auth/register` | Đăng ký người dùng mới                      |
+| POST   | `/api/auth/login`    | Đăng nhập, trả về token + lưu session Redis |
+| GET    | `/api/auth/me`       | Trả về thông tin người dùng qua token       |
 
-### 3. Giỏ Hàng (Cart Management)
-- Thêm / Xem / Xóa sản phẩm trong giỏ hàng
-- Là bước trung gian giữa xem sản phẩm và đặt hàng
+---
 
-### 4. Đặt Hàng (Order Management)
-- Checkout từ giỏ hàng và xem lịch sử đơn hàng
-- Lưu trữ đơn hàng và trạng thái (đang xử lý, đã giao...)
+### 2. 🛍️ Product APIs (MongoDB)
 
-### 5. Đánh Giá & Hành Vi Người Dùng (Review & Behavior)
-- Gửi đánh giá cho sản phẩm đã mua
-- Phân tích hành vi người dùng dựa trên lượt mua và đánh giá
+| Method | Endpoint               | Mô tả                         |
+|--------|------------------------|-------------------------------|
+| GET    | `/api/products`        | Lấy danh sách sản phẩm        |
+| GET    | `/api/products/:id`    | Lấy chi tiết 1 sản phẩm       |
+
+---
+
+### 3. 🛒 Cart APIs (Redis)
+
+| Method | Endpoint                  | Mô tả                             |
+|--------|---------------------------|-----------------------------------|
+| POST   | `/api/cart/add`           | Thêm sản phẩm vào giỏ hàng        |
+| GET    | `/api/cart/`              | Xem giỏ hàng hiện tại             |
+| DELETE | `/api/cart/remove/:id`    | Xóa sản phẩm khỏi giỏ hàng        |
+
+---
+
+### 4. 📦 Order APIs (Cassandra)
+
+| Method | Endpoint               | Mô tả                                         |
+|--------|------------------------|-----------------------------------------------|
+| POST   | `/api/order/checkout`  | Tạo đơn hàng từ giỏ hàng (ghi vào Cassandra)  |
+| GET    | `/api/order/history`   | Lấy lịch sử đơn hàng theo user                |
+
+---
+
+### 5. ⭐ Review APIs (Neo4j)
+
+| Method | Endpoint                     | Mô tả                                                             |
+|--------|------------------------------|-------------------------------------------------------------------|
+| POST   | `/api/review/:productId`     | Tạo đánh giá cho sản phẩm                                         |
+| GET    | `/api/review/:productId`     | Lấy các đánh giá của sản phẩm                                     |
+| GET    | `/api/behavior/:userId`      | Phân tích hành vi người dùng (sản phẩm đã đánh giá/mua...)        |
 
 ## 1. Quản Lý Người Dùng (User Management)
 
