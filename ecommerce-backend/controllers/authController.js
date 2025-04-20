@@ -1,6 +1,8 @@
 const User = require('../models/mongo/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { client: redisClient } = require('../config/redis');
+const { v4: uuidv4 } = require('uuid');
 
 // Register
 exports.register = async (req, res) => {
@@ -32,47 +34,37 @@ exports.register = async (req, res) => {
   }
 };
 
-
-
-// Login
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-
   console.log('🟡 Login request received:', { email });
 
   try {
     const user = await User.findOne({ email });
-
-    if (!user) {
-      console.warn('🔴 No user found with email:', email);
-      return res.status(400).json({ error: 'Invalid email or password' });
-    }
-
-    console.log('👤 Found user:', user);
-
-    if (!user.password) {
-      console.warn('🔴 User found but password is missing');
-      return res.status(500).json({ error: 'User data invalid' });
-    }
+    if (!user) return res.status(400).json({ error: 'Invalid email or password' });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      console.warn('🔴 Password mismatch for user:', email);
-      return res.status(400).json({ error: 'Invalid email or password' });
-    }
+    if (!isMatch) return res.status(400).json({ error: 'Invalid email or password' });
 
-    if (!process.env.JWT_SECRET_KEY) {
-      console.error('❌ JWT_SECRET is missing in environment variables!');
-      return res.status(500).json({ error: 'Server config error' });
-    }
+    const sessionId = uuidv4();
+    const tokenExpireSeconds = 7 * 24 * 60 * 60; // 7 ngày
 
     const token = jwt.sign(
-      { email: user.email },  
+      { sessionId },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: '7d' }
+      { expiresIn: tokenExpireSeconds }
     );
-    
-    console.log('🟢 Login successful for:', email);
+
+    // Lưu vào Redis: user_id + token
+    const redisKey = `session:${sessionId}`;
+    await redisClient.hSet(redisKey, {
+      user_id: user._id.toString(),
+      token,
+    });
+
+    await redisClient.expire(redisKey, tokenExpireSeconds);
+
+    console.log(`🟢 Redis session created: ${redisKey}`);
+
     res.status(200).json({ token });
   } catch (error) {
     console.error('💥 Login Error:', error);

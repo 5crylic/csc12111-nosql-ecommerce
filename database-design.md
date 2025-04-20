@@ -27,16 +27,6 @@
   - `stockQuantity` (Number): Số lượng còn lại trong kho.
   - `status` (String): Trạng thái sản phẩm (available, out of stock).
 
-### **carts**
-- **Mô tả**: Lưu thông tin giỏ hàng của người dùng.
-- **Trường**:
-  - `userId` (ObjectId): ID người dùng.
-  - `items` (Array[Object]): Danh sách các sản phẩm trong giỏ hàng, mỗi sản phẩm bao gồm:
-    - `productId` (ObjectId): ID sản phẩm.
-    - `quantity` (Number): Số lượng sản phẩm.
-    - `variant` (String): Biến thể sản phẩm (màu sắc, kích thước).
-  - `updatedAt` (ISODate): Thời gian cập nhật giỏ hàng gần nhất.
-
 ---
 
 ## 2. Redis
@@ -48,6 +38,7 @@
 
 ### **cart:<user_id>**
 - **Mô tả**: Lưu trữ giỏ hàng tạm thời của người dùng trong Redis.
+- **Kiểu dữ liệu**: List
 - **Trường**:
   - `product_id` (ObjectId): ID sản phẩm trong giỏ.
   - `quantity` (Number): Số lượng của sản phẩm.

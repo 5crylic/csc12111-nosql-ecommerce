@@ -4,6 +4,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const connectMongoDB = require('./config/mongo');
+const { connect: connectRedis } = require('./config/redis');
+
 
 const app = express();
 
@@ -20,6 +22,7 @@ require('./config/cassandra');
 require('./config/neo4j');
 
 connectMongoDB();
+connectRedis();
 
 
 // Routes

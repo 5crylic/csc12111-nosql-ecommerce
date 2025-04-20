@@ -173,10 +173,13 @@
 - **Mô tả**: Thêm sản phẩm vào giỏ hàng.
 - **Request body**:
   ```json
-  {
+  { 
     "productId": "product_id_here",
     "quantity": 2,
-    "variant": "Màu đỏ, size M"
+    "variant": {
+      "color": "đỏ",
+      "size": "M"
+    }
   }
   ```
 - **Response**:

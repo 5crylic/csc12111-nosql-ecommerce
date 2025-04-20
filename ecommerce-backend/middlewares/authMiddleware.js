@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+const redisClient = require('../config/redis');
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -11,10 +12,20 @@ const authMiddleware = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    req.user = { email: decoded.email };  // ⚠️ Không dùng userId nữa
+    const sessionId = decoded.sessionId;
+
+    const redisKey = `session:${sessionId}`;
+    const sessionData = await redisClient.hGetAll(redisKey);
+
+    if (!sessionData || !sessionData.token || sessionData.token !== token) {
+      return res.status(401).json({ error: 'Invalid or expired session' });
+    }
+
+    req.userId = sessionData.user_id;
     next();
   } catch (error) {
-    res.status(401).json({ error: 'Invalid token' });
+    console.error('❌ Token verification failed:', error);
+    return res.status(401).json({ error: 'Invalid token' });
   }
 };
 

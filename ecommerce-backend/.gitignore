@@ -9,3 +9,6 @@ node_modules/
 
 # Ignore environment variables file
 .env
+
+# Ignore docker-cli notes
+docker-cli-notes.txt
