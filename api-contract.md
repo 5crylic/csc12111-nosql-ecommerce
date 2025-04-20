@@ -2,8 +2,6 @@
 
 ## 🌐 API Thiết Kế Theo Flow
 
----
-
 ### 1. 🔐 Auth APIs (MongoDB + Redis)
 
 | Method | Endpoint             | Mô tả                                       |
@@ -139,6 +137,7 @@
         "price": 200000,
         "category": "Thời trang",
         "stockQuantity": 50,
+        "image": "base64",
         "status": "available"
       }
     ]
@@ -153,6 +152,7 @@
       "productId": "product_id",
       "name": "Áo sơ mi nam",
       "description": "Chất liệu cotton thoáng mát",
+      "image": "base64",
       "price": 200000,
       "discountPrice": 180000,
       "category": "Thời trang",

@@ -12,7 +12,6 @@
   - `phoneNumber` (String): Số điện thoại người dùng.
   - `accountStatus` (String): Trạng thái tài khoản (active/inactive).
   - `registrationDate` (ISODate): Ngày đăng ký tài khoản.
-  - `linkedAccounts` (Object): Các tài khoản liên kết (Facebook, Google, v.v.).
 
 ### **products**
 - **Mô tả**: Lưu thông tin về các sản phẩm trong cửa hàng.
@@ -20,7 +19,7 @@
   - `_id` (ObjectId): ID sản phẩm.
   - `name` (String): Tên sản phẩm.
   - `description` (String): Mô tả sản phẩm.
-  - `images` (Array[String]): Danh sách các hình ảnh sản phẩm.
+  - `image` (String): Hình ảnh sản phẩm.
   - `price` (Number): Giá sản phẩm.
   - `discountPrice` (Number): Giá khuyến mãi (nếu có).
   - `category` (String): Danh mục sản phẩm (e.g., thời trang, điện tử).
