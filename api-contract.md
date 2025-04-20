@@ -206,7 +206,10 @@
         {
           "productId": "product_id_here",
           "quantity": 2,
-          "variant": "Màu đỏ, size M",
+          "variant": {
+            "color": "đỏ",
+            "size": "M"
+          },
           "price": 200000
         }
       ],
