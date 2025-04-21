@@ -35,6 +35,7 @@
 - **Mô tả**: Lưu trữ thông tin phiên làm việc của người dùng.
 - **Trường**:
   - `user_id` (String): ID người dùng, dùng để xác thực các yêu cầu từ người dùng.
+  - `token` (String): JWT Token
 
 ### **cart:<user_id>**
 - **Mô tả**: Lưu trữ giỏ hàng tạm thời của người dùng trong Redis.

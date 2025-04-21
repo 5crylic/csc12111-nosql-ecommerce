@@ -45,17 +45,17 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ error: 'Invalid email or password' });
 
-    const sessionId = uuidv4();
+    const sessionId = uuidv4(); // Tạo session ID ngẫu nhiên
     const tokenExpireSeconds = 7 * 24 * 60 * 60; // 7 ngày
 
     const token = jwt.sign(
-      { sessionId },
+      { sessionId: sessionId },
       process.env.JWT_SECRET_KEY,
       { expiresIn: tokenExpireSeconds }
     );
 
     // Lưu vào Redis: user_id + token
-    const redisKey = `session:${sessionId}`;
+    const redisKey = `session:${token}`;
     await redisClient.hSet(redisKey, {
       user_id: user._id.toString(),
       token,
