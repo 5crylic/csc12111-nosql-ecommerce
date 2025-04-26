@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const connectMongoDB = require('./config/mongo');
 const { connect: connectRedis } = require('./config/redis');
 const { connect: connectNeo4j } = require('./config/neo4j');
+const { connect: connectCassandra } = require('./config/cassandra');
 
 
 const app = express();
@@ -25,6 +26,7 @@ require('./config/neo4j');
 connectMongoDB();
 connectRedis();
 connectNeo4j();
+connectCassandra();
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
