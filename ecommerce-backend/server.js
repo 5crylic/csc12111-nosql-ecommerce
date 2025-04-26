@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const connectMongoDB = require('./config/mongo');
 const { connect: connectRedis } = require('./config/redis');
+const { connect: connectNeo4j } = require('./config/neo4j');
 
 
 const app = express();
@@ -23,7 +24,7 @@ require('./config/neo4j');
 
 connectMongoDB();
 connectRedis();
-
+connectNeo4j();
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));

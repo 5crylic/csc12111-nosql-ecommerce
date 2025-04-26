@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const redisClient = require('../config/redis');
+const { client } = require('../config/redis');
 
 const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -14,8 +14,12 @@ const authMiddleware = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const sessionId = decoded.sessionId;
 
+    console.log(sessionId)
+
     const redisKey = `session:${sessionId}`;
-    const sessionData = await redisClient.hGetAll(redisKey);
+    const sessionData = await client.hGetAll(redisKey);
+
+    console.log(sessionData)
 
     if (!sessionData || !sessionData.token || sessionData.token !== token) {
       return res.status(401).json({ error: 'Invalid or expired session' });

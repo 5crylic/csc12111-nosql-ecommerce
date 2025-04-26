@@ -45,6 +45,16 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ error: 'Invalid email or password' });
 
+    // 🔍 Kiểm tra Redis xem đã có session nào của user này chưa
+    const redisKeys = await redisClient.keys('session:*');
+    for (const key of redisKeys) {
+      const data = await redisClient.hGetAll(key);
+      if (data.user_id === user._id.toString()) {
+        console.log(`🟢 Existing session found: ${key}`);
+        return res.status(200).json({ token: data.token });
+      }
+    }
+
     const sessionId = uuidv4(); // Tạo session ID ngẫu nhiên
     const tokenExpireSeconds = 7 * 24 * 60 * 60; // 7 ngày
 
@@ -55,7 +65,7 @@ exports.login = async (req, res) => {
     );
 
     // Lưu vào Redis: user_id + token
-    const redisKey = `session:${token}`;
+    const redisKey = `session:${sessionId}`;
     await redisClient.hSet(redisKey, {
       user_id: user._id.toString(),
       token,
