@@ -19,6 +19,7 @@ const authSession = async (req, res, next) => {
     req.token = sessionData.token;
     req.sessionId = sessionId;
 
+      console.log('Session Data:', { ... sessionData} );
     next();
   } catch (err) {
     console.error('AuthSession Error:', err);

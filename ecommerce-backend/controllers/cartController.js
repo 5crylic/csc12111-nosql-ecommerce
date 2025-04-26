@@ -4,6 +4,8 @@ const Product = require('../models/mongo/Product');
 exports.addToCart = async (req, res) => {
   const { productId, quantity, variant } = req.body;
   const userId = req.userId;
+  console.log(userId, productId, quantity, variant);
+
 
   if (!productId || !quantity || !variant) {
     return res.status(400).json({ error: 'Missing product info' });
@@ -47,6 +49,8 @@ exports.getCart = async (req, res) => {
   const userId = req.userId;
   const cartKey = `cart:${userId}`;
 
+
+  console.log(userId, cartKey)
   try {
     const rawItems = await client.lRange(cartKey, 0, -1);
     const items = [];
