@@ -1,0 +1,42 @@
+.products-container {
+  padding: 32px;
+  min-height: calc(100vh - 64px);
+  background-color: #fff7f2;
+  font-family: 'Lato', sans-serif;
+  text-align: center;
+}
+
+.products-title {
+  color: #ee4d2d;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.products-grid {
+  margin-top: 16px;
+}
+
+.product-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  margin: 1%;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+}
+
+.product-name {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+}
+
+.product-price {
+  font-weight: 600;
+  color: #ee4d2d;
+  margin: 6px 0;
+}
+

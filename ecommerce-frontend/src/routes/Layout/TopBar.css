@@ -1,0 +1,34 @@
+/* Shopee-style top bar */
+.topbar-appbar {
+  background-color: #ee4d2d !important;
+}
+
+.topbar-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.topbar-title {
+  font-weight: 600;
+  font-family: 'Lato', sans-serif;
+  cursor: pointer;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.topbar-logout-button {
+  background-color: #fff !important;
+  color: #ee4d2d !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  padding: 4px 16px !important;
+  text-transform: none !important;
+}
+
+.topbar-logout-button:hover {
+  background-color: #ffe6d5 !important;
+}

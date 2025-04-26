@@ -1,0 +1,78 @@
+.order-history-container {
+  padding: 32px;
+  background-color: #fff7f2;
+  min-height: calc(100vh - 64px);
+  font-family: "Lato", sans-serif;
+}
+
+.order-history-title {
+  color: #ee4d2d;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-card {
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.order-id {
+  font-weight: 600;
+  color: #333;
+}
+
+.order-status {
+  font-weight: 500;
+}
+
+.status-chip {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+  text-transform: capitalize;
+}
+
+.status-chip.completed {
+  background-color: #2ecc71;
+}
+
+.status-chip.pending {
+  background-color: #f39c12;
+}
+
+.order-date {
+  color: #777;
+  margin-top: 4px;
+}
+
+.order-items {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.order-item {
+  background: #fafafa;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.item-name {
+  font-weight: 500;
+}

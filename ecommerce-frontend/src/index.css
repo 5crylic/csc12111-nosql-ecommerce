@@ -1,0 +1,40 @@
+/* index.css */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+}
+
+/* 🌟 Shopee-style SweetAlert2 global styles */
+.swal2-popup {
+  border-radius: 12px;
+  font-family: 'Lato', sans-serif;
+  padding: 2rem 1.5rem;
+}
+
+.swal2-title {
+  color: #ee4d2d;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.swal2-confirm {
+  background-color: #ee4d2d !important;
+  color: white !important;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(238, 77, 45, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.swal2-confirm:hover {
+  background-color: #d94426 !important;
+}
+
+.swal2-cancel {
+  border-radius: 8px;
+  font-weight: 600;
+}
